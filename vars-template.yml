@@ -1,0 +1,34 @@
+azs: [us-west-1a, us-west-1b, us-west-1c]
+plane-certificate:
+  private_key: &private_key |
+    -----BEGIN FAKE RSA PRIVATE KEY-----
+    data data data
+    -----END FAKE RSA PRIVATE KEY-----
+  certificate: &certificate |
+    -----BEGIN CERTIFICATE-----
+    data data data
+    -----END CERTIFICATE-----
+  ca: &ca |
+    -----BEGIN CERTIFICATE-----
+    data data data
+    -----END CERTIFICATE-----
+control-plane-ca:
+  certificate: *ca
+control-plane-tls:
+  certificate: *certificate
+  private_key: *private_key
+  ca: *ca
+credhub-tls:
+  certificate: *certificate
+  private_key: *private_key
+  ca: *ca
+external_url: https://plane.((domain))
+network_name: control-plane
+persistent_disk_type: "51200"
+uaa-tls:
+  certificate: *certificate
+  private_key: *private_key
+  ca: *ca
+uaa_ca_cert: *ca
+uaa_url: https://uaa.((domain))
+vm_type: r4.large

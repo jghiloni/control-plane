@@ -1,0 +1,5 @@
+db-instances: 1
+worker-instances: 3
+uaa-instances: 1
+credhub-instances: 1
+web-instances: 1

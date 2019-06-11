@@ -1,0 +1,26 @@
+releases:
+- name: bosh-dns-aliases
+  version: 0.0.3
+addons:
+- name: bosh-dns-aliases
+  jobs:
+  - name: bosh-dns-aliases
+    release: bosh-dns-aliases
+    properties:
+      aliases:
+      - domain: credhub.service.cf.internal
+        targets:
+        - deployment: control-plane
+          domain: bosh
+          instance_group: credhub
+          network: ((network_name))
+          query: '*'
+      - domain: uaa.service.cf.internal
+        targets:
+        - deployment: control-plane
+          domain: bosh
+          instance_group: uaa
+          network: ((network_name))
+          query: '*'
+  
+  
