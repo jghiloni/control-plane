@@ -11,8 +11,6 @@ releases:
   version: 1.9.9
 - name: uaa
   version: "69.0"
-- name: bosh-dns-aliases
-  version: 0.0.3
 stemcells:
 - alias: default
   os: ubuntu-xenial
