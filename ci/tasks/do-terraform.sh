@@ -10,7 +10,7 @@ export PATH=${PWD}/terraform:${PATH}
 
 cd "${DIR}/terraforming-aws/terraforming-pas"
 
-cp "${DIR}/source/config/terraform/*.tf" .
+cp -vf ${DIR}/source/config/terraform/*.tf .
 
 terraform init 
 terraform plan -var-file="${DIR}/source/config/terraform/terraform.tfvars" -out=plan
