@@ -40,7 +40,7 @@ resources:
   type: github-release
   source:
     owner: stedolan
-    repo: jq
+    repository: jq
 
 jobs:
 - name: init-infrastructure

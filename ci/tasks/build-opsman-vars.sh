@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 export PATH="$(pwd)/jq":${PATH}
 
 jq=jq-linux64
