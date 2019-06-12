@@ -2,7 +2,6 @@
 platform: linux
 
 inputs: 
-- name: terraform-state
 - name: terraforming-aws
 - name: source
 
