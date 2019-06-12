@@ -18,18 +18,22 @@ resources:
 
 - name: terraforming-aws
   type: git
-  source: ((terraforming-aws-repo))
+  source:
+    uri: ((terraforming-aws-repo.uri))
+    private_key: ((terraforming-aws-repo.private_key))
 
 - name: platform-automation
   type: pivnet
   source:
     api_token: ((pivnet-api-token))
     product_slug: platform-automation
-    product_version: ^3\..*$
+    sort_by: semver
 
 - name: source
   type: git
-  source: ((source-repo))
+  source: 
+    uri: ((source-repo.uri))
+    private_key: ((source-repo.private_key))
 
 jobs:
 - name: init-infrastructure
@@ -62,8 +66,8 @@ jobs:
     params:
       TF_VAR_bucket: ((terraform-s3-bucket))
       TF_VAR_region: ((s3-region))
-      AWS_ACCESS_KEY_ID: ((s3-access-key))
-      AWS_SECRET_ACCESS_KEY: ((s3-secret-key))
+      TF_VAR_access_key: ((s3-access-key))
+      TF_VAR_secret_key: ((s3-secret-key))
       TF_VAR_env_name: pas-sandbox
       TF_VAR_ssl_cert: ((pas-tls.certificate))
       TF_VAR_ssl_private_key: ((pas-tls.private_key))

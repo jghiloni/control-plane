@@ -6,3 +6,4 @@ vpc_cidr           = "10.1.0.0/16"
 use_route53        = false
 use_ssh_routes     = true
 use_tcp_routes     = true
+ops_manager_ami    = ""
