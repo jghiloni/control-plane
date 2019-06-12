@@ -4,6 +4,8 @@ set -e
 
 export PATH="$(pwd)/jq":${PATH}
 
+chmod +x jq/jq-linux64
+
 jq=jq-linux64
 json=$(cat $(pwd)/terraform-state/terraform.tfstate)
 
