@@ -11,6 +11,7 @@ outputs:
 
 params:
   ENV_NAME: ''
+  INSTANCE_PROFILE: ''
 
 run: 
   path: source/ci/tasks/build-opsman-vars.sh

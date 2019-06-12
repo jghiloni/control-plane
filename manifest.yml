@@ -253,6 +253,7 @@ instance_groups:
   - name: ((network_name))
     default: [dns, gateway]
   vm_type: ((vm_type))
+  vm_extensions: [worker-extension]
   stemcell: default
   jobs:
   - name: worker

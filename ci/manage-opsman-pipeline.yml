@@ -103,6 +103,7 @@ jobs:
     file: source/ci/tasks/build-opsman-vars.yml
     params:
       ENV_NAME: pas-sandbox
+      INSTANCE_PROFILE: jaygles-control_ops_manager
   - task: create-vm
     image: platform-automation-image
     file: platform-automation-tasks/tasks/create-vm.yml
