@@ -29,11 +29,19 @@ resources:
     product_slug: platform-automation
     sort_by: semver
 
+- name: ops-manager
+  type: pivnet
+  source:
+    api_token: ((pivnet-api-token))
+    product_slug: ops-manager
+    product_version: 2\.5\.(.*)
+
 - name: source
   type: git
   source: 
     uri: ((source-repo.uri))
     private_key: ((source-repo.private_key))
+    branch: master
 
 - name: jq
   check_every: 24h
@@ -87,6 +95,43 @@ jobs:
     - get: jq
       params:
         globs: [jq-linux64]
+    - get: ops-manager
+      params:
+        globs: ['ops-manager-aws-*.yml']
   - task: build-opsman-vars
     image: platform-automation-image
     file: source/ci/tasks/build-opsman-vars.yml
+    params:
+      ENV_NAME: pas-sandbox
+  - task: create-vm
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/create-vm.yml
+    input_mapping:
+      state: source
+      config: source
+      image: ops-manager
+      vars: opsman-vars
+    params:
+      STATE_FILE: pas-sandbox/state.yml
+      VARS_FILES: vars/vars.yml
+      OPSMAN_CONFIG_FILE: config/opsman.yml
+    ensure:
+      do:
+        - task: make-commit
+          image: platform-automation-image
+          file: platform-automation-tasks/tasks/make-git-commit.yml
+          input_mapping:
+            repository: source
+            file-source: generated-state
+          output_mapping:
+            repository-commit: source-commit
+          params:
+            FILE_SOURCE_PATH: state.yml
+            FILE_DESTINATION_PATH: state/pas-sandbox/state.yml
+            GIT_AUTHOR_EMAIL: "pcf-pipeline-bot@example.com"
+            GIT_AUTHOR_NAME: "Platform Automation Bot"
+            COMMIT_MESSAGE: 'Update state file'
+        - put: source
+          params:
+            repository: source-commit
+            merge: true

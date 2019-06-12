@@ -20,6 +20,7 @@ echo "${json}" | $jq -r '.modules[] | select(.outputs.public_subnet_ids?) | sele
 echo -n "opsman-security-group: " >> opsman-vars/vars.yml
 echo "${json}" | $jq -r '.modules[] | select(.outputs.ops_manager_security_group_id?) | select(.path==["root"]) | .outputs.ops_manager_security_group_id.value' >> opsman-vars/vars.yml
 
+echo "opsman-keypair-name: ${ENV_NAME}-ops-manager-key" >> opsman-vars/vars.yml
 echo "opsman-iam-profile: ${ENV_NAME}_ops_manager" >> opsman-vars/vars.yml
 
 echo -n "opsman-public-ip: " >> opsman-vars/vars.yml
