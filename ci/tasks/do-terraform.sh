@@ -14,8 +14,8 @@ cp -vf ${DIR}/source/config/terraform/*.tf .
 
 AWS_ACCESS_KEY="${TF_VAR_access_key}" \
 AWS_SECRET_KEY="${TF_VAR_secret_key}" \
-AWS_DEFAULT_REGION="${TF_VAR_region}" \
 terraform init \
+  --backend-config="region=${TF_VAR_region}" \
   --backend-config="bucket=${TF_VAR_bucket}" \
   --backend-config="key=${TF_VAR_key}"
 terraform plan -var-file="${DIR}/source/config/terraform/terraform.tfvars" -out=plan
