@@ -7,14 +7,14 @@ resource_types:
     tag: latest-final
 
 resources:
-- name: terraform-state
-  type: s3
-  source:
-    bucket: ((terraform-s3-bucket))
-    region_name: ((s3-region))
-    access_key_id: ((s3-access-key))
-    secret_access_key: ((s3-secret-key))
-    versioned_file: terraform.tfstate
+# - name: terraform-state
+#   type: s3
+#   source:
+#     bucket: ((terraform-s3-bucket))
+#     region_name: ((s3-region))
+#     access_key_id: ((s3-access-key))
+#     secret_access_key: ((s3-secret-key))
+#     versioned_file: terraform.tfstate
 
 - name: terraforming-aws
   type: git
@@ -40,7 +40,7 @@ jobs:
   serial: true
   plan:
   - aggregate:
-    - get: terraform-state
+    # - get: terraform-state
     - get: terraforming-aws
     - get: source
     - get: platform-automation-image
@@ -66,6 +66,7 @@ jobs:
     params:
       TF_VAR_bucket: ((terraform-s3-bucket))
       TF_VAR_region: ((s3-region))
+      TF_VAR_key: "pas-sandbox/terraform.tfstate"
       TF_VAR_access_key: ((s3-access-key))
       TF_VAR_secret_key: ((s3-secret-key))
       TF_VAR_env_name: pas-sandbox
