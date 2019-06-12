@@ -17,6 +17,6 @@ AWS_SECRET_KEY="${TF_VAR_secret_key}" \
 AWS_DEFAULT_REGION="${TF_VAR_region}" \
 terraform init \
   --backend-config="bucket=${TF_VAR_bucket}" \
-  --backend-config="key=${TF_VAR_KEY}"
+  --backend-config="key=${TF_VAR_key}"
 terraform plan -var-file="${DIR}/source/config/terraform/terraform.tfvars" -out=plan
 terraform apply plan 
