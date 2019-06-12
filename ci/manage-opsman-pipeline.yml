@@ -7,14 +7,14 @@ resource_types:
     tag: latest-final
 
 resources:
-# - name: terraform-state
-#   type: s3
-#   source:
-#     bucket: ((terraform-s3-bucket))
-#     region_name: ((s3-region))
-#     access_key_id: ((s3-access-key))
-#     secret_access_key: ((s3-secret-key))
-#     versioned_file: terraform.tfstate
+- name: terraform-state
+  type: s3
+  source:
+    bucket: ((terraform-s3-bucket))
+    region_name: ((s3-region))
+    access_key_id: ((s3-access-key))
+    secret_access_key: ((s3-secret-key))
+    versioned_file: pas-sandbox/terraform.tfstate
 
 - name: terraforming-aws
   type: git
@@ -35,12 +35,18 @@ resources:
     uri: ((source-repo.uri))
     private_key: ((source-repo.private_key))
 
+- name: jq
+  check_every: 24h
+  type: github-release
+  source:
+    owner: stedolan
+    repo: jq
+
 jobs:
 - name: init-infrastructure
   serial: true
   plan:
   - aggregate:
-    # - get: terraform-state
     - get: terraforming-aws
     - get: source
     - get: platform-automation-image
@@ -48,18 +54,6 @@ jobs:
       params:
         globs: ['*.tgz']
         unpack: true
-    # - get: platform-automation-tasks
-    #   resource: platform-automation
-    #   params:
-    #     globs: ['*.zip']
-    #     unpack: true
-#   - task: credhub-interpolate
-#     image: platform-automation-image
-#     file: platform-automation-tasks/tasks/credhub-interpolate.yml
-#     params:
-#       CREDHUB_SERVER: ((credhub_target_url))
-#       CREDHUB_CLIENT: ((credhub_client.username))
-#       CREDHUB_SECRET: ((credhub_client.password))
   - task: do-terraform
     image: platform-automation-image
     file: source/ci/tasks/do-terraform.yml
@@ -72,3 +66,27 @@ jobs:
       TF_VAR_env_name: pas-sandbox
       TF_VAR_ssl_cert: ((pas-tls.certificate))
       TF_VAR_ssl_private_key: ((pas-tls.private_key))
+- name: install-opsman
+  serial: true
+  plan:
+  - aggregate:
+    - get: terraform-state
+    - get: source
+    - get: platform-automation-image
+      resource: platform-automation
+      trigger: true
+      passed: [init-infrastructure]
+      params:
+        globs: ['*.tgz']
+        unpack: true
+    - get: platform-automation-tasks
+      resource: platform-automation
+      params:
+        globs: ['*.zip']
+        unpack: true
+    - get: jq
+      params:
+        globs: [jq-linux64]
+  - task: build-opsman-vars
+    image: platform-automation-image
+    file: source/ci/tasks/build-opsman-vars.yml

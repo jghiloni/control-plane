@@ -1,0 +1,15 @@
+---
+platform: linux
+
+inputs:
+- name: terraform-state
+- name: source
+
+outputs:
+- name: opsman-vars
+
+params:
+  ENV_NAME: ''
+
+run: 
+  path: source/ci/tasks/build-opsman-vars.sh
