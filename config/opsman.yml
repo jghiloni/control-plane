@@ -1,0 +1,15 @@
+---
+opsman-configuration:
+  aws:
+    region: ((region))
+    vm_name: ((opsman-name))
+    boot_disk_size: 100 # default 200
+    vpc_subnet_id: ((public-subnet-id))
+    security_group_id: ((opsman-security-group))
+    key_pair_name: ((opsman-keypair-name))
+    iam_instance_profile_name: ((opsman-iam-profile))
+    instance_type: r4.large
+    # At least one IP address (public or private)
+    # needs to be assigned to the VM.
+    # It is also permissable to assign both.
+    public_ip: ((opsman-public-ip))

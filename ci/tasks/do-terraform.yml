@@ -1,0 +1,10 @@
+---
+platform: linux
+
+inputs: 
+- name: terraform-state
+- name: terraforming-aws
+- name: source
+
+run:
+  path: source/ci/tasks/do-terraform.sh
