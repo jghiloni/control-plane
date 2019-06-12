@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e 
+set -ex 
 
 DIR=$(pwd)
 
@@ -12,9 +12,9 @@ cd "${DIR}/terraforming-aws/terraforming-pas"
 
 cp -vf ${DIR}/source/config/terraform/*.tf .
 
-AWS_ACCESS_KEY="${TF_VAR_access_key}" \
-AWS_SECRET_KEY="${TF_VAR_secret_key}" \
 terraform init \
+  --backend-config="access_key=${TF_VAR_access_key}" \
+  --backend-config="secret_key=${TF_VAR_secret_key}" \
   --backend-config="region=${TF_VAR_region}" \
   --backend-config="bucket=${TF_VAR_bucket}" \
   --backend-config="key=${TF_VAR_key}"
