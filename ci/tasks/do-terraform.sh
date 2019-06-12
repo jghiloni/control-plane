@@ -12,6 +12,11 @@ cd "${DIR}/terraforming-aws/terraforming-pas"
 
 cp -vf ${DIR}/source/config/terraform/*.tf .
 
-terraform init 
+AWS_ACCESS_KEY="${TF_VAR_access_key}" \
+AWS_SECRET_KEY="${TF_VAR_secret_key}" \
+AWS_DEFAULT_REGION="${TF_VAR_region}" \
+terraform init \
+  --backend-config="bucket=${TF_VAR_bucket}" \
+  --backend-config="key=${TF_VAR_KEY}"
 terraform plan -var-file="${DIR}/source/config/terraform/terraform.tfvars" -out=plan
 terraform apply plan 
