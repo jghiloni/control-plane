@@ -20,8 +20,8 @@ write_ops() {
     local path=$1
     local value=$2
 
-    block=$(echo "{}" | $jq --arg path $path --argjson value "$value" '. |= . + {"type": "replace","path":$path,"value":$value}'
-    echo "- $block" | bosh int - >> "${DIR}"/vars/ops.yml
+    block=$(echo "{}" | $jq --arg path $path --argjson value "$value" '. |= . + {"type": "replace","path":$path,"value":$value}')
+    echo "- ${block}" | bosh int -  ${DIR}/vars/ops.yml
 }
 
 write_ops "/iaas-configurations/name=default/iam_instance_profile" "$(get_value -r '.ops_manager_iam_instance_profile_name.value')"
