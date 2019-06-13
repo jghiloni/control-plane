@@ -1,0 +1,13 @@
+---
+platform: linux
+
+inputs: 
+- name: terraform-release
+- name: terraforming-aws
+- name: source
+
+outputs:
+- name: terraform
+
+run:
+  path: source/ci/tasks/init-terraform.sh

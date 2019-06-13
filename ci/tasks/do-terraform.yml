@@ -2,7 +2,7 @@
 platform: linux
 
 inputs: 
-- name: terraforming-aws
+- name: terraform
 - name: source
 
 run:

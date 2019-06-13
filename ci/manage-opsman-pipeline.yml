@@ -57,24 +57,42 @@ resources:
     owner: stedolan
     repository: jq
 
+- name: terraform-release
+  check_every: 24h
+  type: github-release
+  source:
+    owner: hashicorp
+    repository: terraform
+    tag_filter: v(0\.11\..*)
+
 jobs:
 - name: init-infrastructure
   serial: true
   plan:
   - aggregate:
+    - get: terraform-release
     - get: terraforming-aws
     - get: source
     - get: platform-automation-image
       params:
         globs: ['*.tgz']
         unpack: true
-  - task: do-terraform
+  - task: init-terraform
     image: platform-automation-image
-    file: source/ci/tasks/do-terraform.yml
+    file: source/ci/tasks/init-terraform.yml
     params:
       TF_VAR_bucket: ((terraform-s3-bucket))
       TF_VAR_region: ((s3-region))
       TF_VAR_key: "((environment))/terraform.tfstate"
+      TF_VAR_access_key: ((s3-access-key))
+      TF_VAR_secret_key: ((s3-secret-key))
+  - task: do-terraform
+    image: platform-automation-image
+    file: source/ci/tasks/do-terraform.yml
+    params:
+    #   TF_VAR_bucket: ((terraform-s3-bucket))
+    #   TF_VAR_region: ((s3-region))
+    #   TF_VAR_key: "((environment))/terraform.tfstate"
       TF_VAR_access_key: ((s3-access-key))
       TF_VAR_secret_key: ((s3-secret-key))
       TF_VAR_env_name: ((environment))
@@ -167,4 +185,35 @@ jobs:
     params:
       OM_TARGET: ((opsman.target))
       OM_SKIP_SSL_VALIDATION: true
+- name: configure-director
+  serial: true
+  plan:
+  - aggregate:
+    - get: terraform-release
+    - get: source
+    - get: platform-automation-image
+      trigger: true
+      passed: [configure-authentication]
+      params:
+        globs: ['*.tgz']
+        unpack: true
+    - get: platform-automation-tasks
+      params:
+        globs: ['*.zip']
+        unpack: true
+    - get: jq
+      params:
+        globs: [jq-linux64]
+  - task: init-terraform
+    image: platform-automation-image
+    file: source/ci/tasks/init-terraform.yml
+    params:
+      TF_VAR_bucket: ((terraform-s3-bucket))
+      TF_VAR_region: ((s3-region))
+      TF_VAR_key: "((environment))/terraform.tfstate"
+      TF_VAR_access_key: ((s3-access-key))
+      TF_VAR_secret_key: ((s3-secret-key))
+  - task: build-additional-files
+    image: platform-automation-image
+    file: source/ci/tasks/build-additional-files.yml
     

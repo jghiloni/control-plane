@@ -1,0 +1,14 @@
+---
+platform: linux
+
+inputs:
+- name: terraform
+- name: source
+- name: jq
+
+outputs:
+- name: vars
+- name: secrets
+
+run:
+  path: source/ci/tasks/build-additional-files.sh

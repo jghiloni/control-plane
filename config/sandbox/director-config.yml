@@ -1,0 +1,28 @@
+az-configuration: []
+iaas-configurations:
+- iam_instance_profile: ((iam_instance_profile))
+  key_pair_name: ((opsman_ssh_keypair_name))
+  name: default
+  region: ((region))
+  security_group: ((opsman_security_group))
+  ssh_private_key: ((opsman_ssh_private_key))
+network-assignment:
+  network:
+    name: infrastructure
+  singleton_availability_zone:
+    name: us-gov-west-1a
+networks-configuration:
+  networks:
+  - name: pas
+    subnets: []
+  - name: infrastructure
+    subnets: []
+  - name: public
+    subnets: []
+properties-configuration:
+  director_configuration:
+    ntp_servers_string: 169.254.169.123
+    resurrector_enabled: true
+  security_configuration:
+    opsmanager_root_ca_trusted_certs: true
+    trusted_certificates: ((trusted_certificates))
