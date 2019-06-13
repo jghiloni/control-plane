@@ -21,3 +21,12 @@ terraform init \
   --backend-config="region=${TF_VAR_region}" \
   --backend-config="bucket=${TF_VAR_bucket}" \
   --backend-config="key=${TF_VAR_key}"
+
+# Because of the way terraform links modules, we need to go in and convert
+# symlinks into hard directories.
+cd .terraform/modules
+for link in $(find . -type l | cut -d '/' -f2); do
+  linkTarget="$(readlink $link)"
+  unlink $link
+  cp -Rvf $linkTarget $link
+done
