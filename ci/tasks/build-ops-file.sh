@@ -28,7 +28,7 @@ cat >> "${DIR}"/vars/ops.yml <<EOF
 EOF
 }
 
-instanceProfile=$(get_value '.ops_manager_iam_instance_profile_name.value')
+instanceProfile=$(get_value -r '.ops_manager_iam_instance_profile_name.value')
 write_ops "/iaas-configurations/name=default/iam_instance_profile" "${instanceProfile}"
 
 cat "${DIR}"/vars/ops.yml
