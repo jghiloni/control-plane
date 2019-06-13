@@ -217,4 +217,6 @@ jobs:
   - task: build-ops-file
     image: platform-automation-image
     file: source/ci/tasks/build-ops-file.yml
+    params:
+      ENV_NAME: ((environment))
     

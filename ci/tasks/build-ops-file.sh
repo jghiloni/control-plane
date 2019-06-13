@@ -83,7 +83,7 @@ done
 
 rdsHost=$(get_value -r '.rds_address.value')
 if [[ "${rdsHost}" != "" ]]; then
-    rdsCAs=$(curl -L https://s3.amazonaws.com/rds-downloads/rds-combined-ca-bundle.pem)
+    rdsCAs=$(curl -L https://s3.amazonaws.com/rds-downloads/rds-combined-ca-bundle.pem | sed -e ':a;N;$!ba;s/\n/\\n/g')
     write_ops "/properties-configuration/security_configuration/trusted_certificates" "\"${rdsCAs}\""
 fi
 
