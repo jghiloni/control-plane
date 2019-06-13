@@ -219,4 +219,18 @@ jobs:
     file: source/ci/tasks/build-ops-file.yml
     params:
       ENV_NAME: ((environment))
+  - task: configure-director
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/configure-director.yml
+    input_mapping:
+      env: source
+      config: source
+    params:
+      OM_TARGET: ((opsman.target))
+      OM_USERNAME: ((opsman.username))
+      OM_PASSWORD: ((opsman.password))
+      OM_SKIP_SSL_VALIDATION: true
+      DIRECTOR_CONFIG_FILE: config/((environment))/director-config.yml
+      OPS_FILES: vars/ops.yml
+
     

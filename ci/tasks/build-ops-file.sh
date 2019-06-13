@@ -98,5 +98,3 @@ write_ops "/vmextensions-configuration/name=tcp-extension/cloud_properties/secur
 write_ops "/vmextensions-configuration/name=web-extension/cloud_properties/security_groups/-" "\"${ENV_NAME}-lb-security-group\""
 write_ops "/vmextensions-configuration/name=ssh-extension/cloud_properties/security_groups/-" "\"${ENV_NAME}-ssh-lb-security-group\""
 write_ops "/vmextensions-configuration/name=tcp-extension/cloud_properties/security_groups/-" "\"${ENV_NAME}-tcp-lb-security-group\""
-
-cat "${DIR}"/vars/ops.yml
