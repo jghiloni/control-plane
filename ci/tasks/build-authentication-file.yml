@@ -1,0 +1,16 @@
+---
+platform: linux
+
+inputs:
+- name: source
+
+outputs:
+- name: auth-file
+
+params:
+  USERNAME: ((opsman.username))
+  PASSWORD: ((opsman.password))
+  DECRYPTION_PASSPHRASE: ((opsman.decryption-passphrase))
+
+run:
+  path: source/ci/tasks/build-authentication-file.sh

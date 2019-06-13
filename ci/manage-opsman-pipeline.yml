@@ -22,7 +22,14 @@ resources:
     uri: ((terraforming-aws-repo.uri))
     private_key: ((terraforming-aws-repo.private_key))
 
-- name: platform-automation
+- name: platform-automation-image
+  type: pivnet
+  source:
+    api_token: ((pivnet-api-token))
+    product_slug: platform-automation
+    sort_by: semver
+
+- name: platform-automation-tasks
   type: pivnet
   source:
     api_token: ((pivnet-api-token))
@@ -58,7 +65,6 @@ jobs:
     - get: terraforming-aws
     - get: source
     - get: platform-automation-image
-      resource: platform-automation
       params:
         globs: ['*.tgz']
         unpack: true
@@ -81,14 +87,12 @@ jobs:
     - get: terraform-state
     - get: source
     - get: platform-automation-image
-      resource: platform-automation
       trigger: true
       passed: [init-infrastructure]
       params:
         globs: ['*.tgz']
         unpack: true
     - get: platform-automation-tasks
-      resource: platform-automation
       params:
         globs: ['*.zip']
         unpack: true
@@ -113,7 +117,7 @@ jobs:
       image: ops-manager
       vars: opsman-vars
     params:
-      STATE_FILE: ((environment))/state.yml
+      STATE_FILE: state/((environment))/state.yml
       VARS_FILES: vars/vars.yml
       OPSMAN_CONFIG_FILE: config/opsman.yml
     ensure:
@@ -136,3 +140,31 @@ jobs:
           params:
             repository: source-commit
             merge: true
+- name: configure-authentication
+  serial: true
+  plan:
+  - aggregate:
+    - get: source
+    - get: platform-automation-image
+      trigger: true
+      passed: [install-opsman]
+      params:
+        globs: ['*.tgz']
+        unpack: true
+    - get: platform-automation-tasks
+      params:
+        globs: ['*.zip']
+        unpack: true
+  - task: build-authentication-file
+    image: platform-automation-image
+    file: source/ci/tasks/build-authentication-file.yml
+  - task: configure-authentication
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/configure-authentication.yml
+    input_mapping:
+      env: source
+      config: auth-file
+    params:
+      OM_TARGET: ((opsman.target))
+      OM_SKIP_SSL_VALIDATION: true
+    
