@@ -32,4 +32,4 @@ echo "${json}" | $jq -r '.modules[] | select(.outputs.ops_manager_iam_user_secre
 echo -n "opsman-public-ip: " >> opsman-vars/vars.yml
 echo "${json}" | $jq -r '.modules[] | select(.outputs.ops_manager_public_ip?) | select(.path==["root"]) | .outputs.ops_manager_public_ip.value' >> opsman-vars/vars.yml
 
-cat opsman-vars/vars.yml
+echo "environment: ${ENV_NAME}" >> opsman-vars/vars.yml

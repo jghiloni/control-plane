@@ -6,7 +6,7 @@ opsman-configuration:
     vpc_subnet_id: ((public-subnet-id))
     security_group_id: ((opsman-security-group))
     key_pair_name: ((opsman-keypair-name))
-    iam_instance_profile_name: ''
+    iam_instance_profile_name: ((environment))_ops_manager
     access_key_id: ((access-key-id))
     secret_access_key: ((secret-access-key))
     instance_type: r4.large
