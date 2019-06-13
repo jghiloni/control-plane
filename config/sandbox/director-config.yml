@@ -10,7 +10,7 @@ network-assignment:
   network:
     name: infrastructure
   singleton_availability_zone:
-    name: us-gov-west-1a
+    name: ''
 networks-configuration:
   networks:
   - name: pas
