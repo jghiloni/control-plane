@@ -190,6 +190,7 @@ jobs:
   plan:
   - aggregate:
     - get: terraform-release
+    - get: terraforming-aws
     - get: source
     - get: platform-automation-image
       trigger: true

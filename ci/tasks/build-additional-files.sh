@@ -5,7 +5,7 @@ set -euo pipefail
 DIR=$(pwd)
 jq="${DIR}"/jq/jq-linux64
 
-cd "${DIR}"/terraform
+cd "${DIR}"/terraform/terraforming-pas
 
 tfJSON=$(./terraform output -json)
 
