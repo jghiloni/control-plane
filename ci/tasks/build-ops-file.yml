@@ -11,4 +11,4 @@ outputs:
 - name: secrets
 
 run:
-  path: source/ci/tasks/build-additional-files.sh
+  path: source/ci/tasks/build-ops-file.sh
