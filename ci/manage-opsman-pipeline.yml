@@ -214,7 +214,7 @@ jobs:
       TF_VAR_key: "((environment))/terraform.tfstate"
       TF_VAR_access_key: ((s3-access-key))
       TF_VAR_secret_key: ((s3-secret-key))
-  - task: build-additional-files
+  - task: build-ops-file
     image: platform-automation-image
-    file: source/ci/tasks/build-additional-files.yml
+    file: source/ci/tasks/build-ops-file.yml
     
