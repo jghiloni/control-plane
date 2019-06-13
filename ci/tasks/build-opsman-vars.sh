@@ -21,7 +21,13 @@ echo -n "opsman-security-group: " >> opsman-vars/vars.yml
 echo "${json}" | $jq -r '.modules[] | select(.outputs.ops_manager_security_group_id?) | select(.path==["root"]) | .outputs.ops_manager_security_group_id.value' >> opsman-vars/vars.yml
 
 echo "opsman-keypair-name: ${ENV_NAME}-ops-manager-key" >> opsman-vars/vars.yml
-echo "opsman-iam-profile: ${INSTANCE_PROFILE}" >> opsman-vars/vars.yml
+
+echo -n "access-key-id: " >> opsman-vars/vars.yml
+echo "${json}" | $jq -r '.modules[] | select(.outputs.ops_manager_iam_user_access_key?) | select(.path==["root"]) | .outputs.ops_manager_iam_user_access_key.value' >> opsman-vars/vars.yml
+
+echo -n "secret-access-key: " >> opsman-vars/vars.yml
+echo "${json}" | $jq -r '.modules[] | select(.outputs.ops_manager_iam_user_secret_key?) | select(.path==["root"]) | .outputs.ops_manager_iam_user_secret_key.value' >> opsman-vars/vars.yml
+
 
 echo -n "opsman-public-ip: " >> opsman-vars/vars.yml
 echo "${json}" | $jq -r '.modules[] | select(.outputs.ops_manager_public_ip?) | select(.path==["root"]) | .outputs.ops_manager_public_ip.value' >> opsman-vars/vars.yml
