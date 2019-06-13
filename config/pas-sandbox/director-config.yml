@@ -17,7 +17,7 @@ networks-configuration:
     subnets: []
   - name: infrastructure
     subnets: []
-  - name: public
+  - name: services
     subnets: []
 properties-configuration:
   director_configuration:
