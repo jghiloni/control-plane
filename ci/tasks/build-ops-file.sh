@@ -28,7 +28,7 @@ write_ops "/iaas-configurations/name=default/iam_instance_profile" "$(get_value 
 write_ops "/iaas-configurations/name=default/key_pair_name" "$(get_value -r '.ops_manager_ssh_public_key_name.value')"
 write_ops "/iaas-configurations/name=default/region" "$(get_value -r '.region.value')"
 write_ops "/iaas-configurations/name=default/security_group" "$(get_value -r '.ops_manager_security_group_id.value')"
-write_ops "/iaas-configurations/name=default/ssh_private_key" "$(get_value '.ops_manager_ssh_private_key.value'"
+write_ops "/iaas-configurations/name=default/ssh_private_key" "$(get_value '.ops_manager_ssh_private_key.value')"
 numAZs=$(get_value '.azs.value | length')
 for i in $(seq 0 $((numAZs-1))); do
 
