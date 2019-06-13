@@ -8,6 +8,7 @@ chmod +x "$jq"
 
 cd "${DIR}"/terraform/terraforming-pas
 
+
 tfJSON=$("${DIR}"/terraform/terraform output -json)
 
 get_value() {
@@ -18,7 +19,7 @@ write_ops() {
     local path=$1
     local value=$2
 
-cat >> vars/ops.yml <<EOF
+cat >> "${DIR}"/vars/ops.yml <<EOF
 - type: replace
   path: $path
   value: $value
