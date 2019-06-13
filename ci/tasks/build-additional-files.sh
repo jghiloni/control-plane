@@ -9,4 +9,4 @@ cd "${DIR}"/terraform/terraforming-pas
 
 tfJSON=$("${DIR}"/terraform/terraform output -json)
 
-echo "${tfJSON}" | jq '.'
+echo "${tfJSON}" | $jq '.'
