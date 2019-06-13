@@ -26,3 +26,16 @@ properties-configuration:
   security_configuration:
     opsmanager_root_ca_trusted_certs: true
     trusted_certificates: ''
+vmextensions-configuration:
+- name: web-extension
+  cloud_properties:
+    lb_target_groups: []
+    security_groups: []
+- name: ssh-extension
+  cloud_properties:
+    lb_target_groups: []
+    security_groups: []
+- name: tcp-extension
+  cloud_properties: 
+    lb_target_groups: []
+    security_groups: []

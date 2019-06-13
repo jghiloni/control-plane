@@ -10,5 +10,8 @@ outputs:
 - name: vars
 - name: secrets
 
+params:
+  ENV_NAME: ''
+
 run:
   path: source/ci/tasks/build-ops-file.sh
