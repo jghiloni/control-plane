@@ -6,8 +6,9 @@ DIR=$(pwd)
 jq="${DIR}"/jq/jq-linux64
 chmod +x "$jq"
 
-cd "${DIR}"/terraform/terraforming-pas
+echo -n "" > "${DIR}"/vars/ops.yml
 
+cd "${DIR}"/terraform/terraforming-pas
 
 tfJSON=$("${DIR}"/terraform/terraform output -json)
 
@@ -27,7 +28,7 @@ cat >> "${DIR}"/vars/ops.yml <<EOF
 EOF
 }
 
-instanceProfile=$(get_value '.ops_manager_instance_profile_name.value')
+instanceProfile=$(get_value '.ops_manager_iam_instance_profile_name.value')
 write_ops "/iaas-configurations/name=default/iam_instance_profile" "${instanceProfile}"
 
-cat vars/ops.yml
+cat "${DIR}"/vars/ops.yml
