@@ -2,7 +2,7 @@
 platform: linux
 
 inputs:
-- name: terraform-state
+- name: terraform
 - name: source
 - name: jq
 
