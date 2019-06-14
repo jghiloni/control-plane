@@ -115,7 +115,7 @@ jobs:
     image: platform-automation-image
     file: source/ci/tasks/init-terraform.yml
     params:
-      TF_VAR_bucket: ((terraform-s3-bucket))
+      TF_VAR_bucket: ((opsman-s3-bucket))
       TF_VAR_region: ((s3-region))
       TF_VAR_key: "((environment))/terraform.tfstate"
       TF_VAR_access_key: ((s3-access-key))
@@ -158,7 +158,7 @@ jobs:
     image: platform-automation-image
     file: source/ci/tasks/init-terraform.yml
     params:
-      TF_VAR_bucket: ((terraform-s3-bucket))
+      TF_VAR_bucket: ((opsman-s3-bucket))
       TF_VAR_region: ((s3-region))
       TF_VAR_key: "((environment))/terraform.tfstate"
       TF_VAR_access_key: ((s3-access-key))
@@ -302,7 +302,7 @@ jobs:
     image: platform-automation-image
     file: source/ci/tasks/init-terraform.yml
     params:
-      TF_VAR_bucket: ((terraform-s3-bucket))
+      TF_VAR_bucket: ((opsman-s3-bucket))
       TF_VAR_region: ((s3-region))
       TF_VAR_key: "((environment))/terraform.tfstate"
       TF_VAR_access_key: ((s3-access-key))

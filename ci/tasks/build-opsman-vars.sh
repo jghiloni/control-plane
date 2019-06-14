@@ -2,11 +2,10 @@
 
 set -e
 
-export PATH="$(pwd)/jq":${PATH}
+export DIR=$(pwd)
 
-chmod +x jq/jq-linux64
-
-jq=jq-linux64
+chmod +x "${DIR}"/jq/jq-linux64
+jq="${DIR}"/jq/jq-linux64
 
 cd "${DIR}"/terraform/terraforming-pas
 
