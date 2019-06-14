@@ -14,9 +14,9 @@ get_value() {
     echo "${tfJSON}" | $jq "$@"
 }
 
-echo "---" > opsman-vars/vars.yml
+echo "---" > "${DIR}"/opsman-vars/vars.yml
 write_var() {
-   echo "$@" >> opsman-vars/vars.yml
+   echo "$@" >> "${DIR}"/opsman-vars/vars.yml
 }
 
 write_var "region: $(get_value '.region.value')"
