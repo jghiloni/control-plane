@@ -232,5 +232,29 @@ jobs:
       OM_SKIP_SSL_VALIDATION: true
       DIRECTOR_CONFIG_FILE: config/((environment))/director-config.yml
       OPS_FILES: vars/ops.yml
-
+- name: apply-changes
+  serial: true
+  plan: 
+  - aggregate:
+    - get: source
+    - get: platform-automation-image
+      trigger: true
+      passed: [configure-director]
+      params:
+        globs: ['*.tgz']
+        unpack: true
+    - get: platform-automation-tasks
+      params:
+        globs: ['*.zip']
+        unpack: true
+  - task: apply-director-changes
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/apply-director-changes.yml
+    input_mapping:
+      env: source
+    params:
+      OM_TARGET: ((opsman.target))
+      OM_USERNAME: ((opsman.username))
+      OM_PASSWORD: ((opsman.password))
+      OM_SKIP_SSL_VALIDATION: true
     
