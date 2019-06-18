@@ -245,6 +245,8 @@ jobs:
   serial: true
   plan:
   - aggregate:
+    - get: one-time-trigger
+      passed: [install-opsman]
     - get: daily-trigger
       trigger: true
     - get: platform-automation-image
@@ -316,6 +318,7 @@ jobs:
     image: platform-automation-image
     file: platform-automation-tasks/tasks/upgrade-opsman.yml
     input_mapping:
+      env: source
       state: source
       config: source
       image: ops-manager
