@@ -11,6 +11,10 @@
 - path: /variables/name=postgres_password
   type: remove
 
+# - path: /instance_groups/name=uaa/jobs/name=uaa/properties/uaa/ca_certs?/-
+#   type: replace
+#   value: ((rds-ca-cert))
+
 - path: /instance_groups/name=uaa/jobs/name=uaa/properties/uaadb/address?
   type: replace
   value: ((rds-hostname))
@@ -34,11 +38,18 @@
   type: replace
   value: ((rds-hostname))
 
+- path: /instance_groups/name=credhub/jobs/name=credhub/properties/credhub/data_storage/port?
+  type: replace
+  value: 5432
+
+- path: /instance_groups/name=credhub/jobs/name=credhub/properties/credhub/data_storage/tls_ca?
+  type: replace
+  value: ((rds-ca-cert))
+
 - path: /instance_groups/name=web/jobs/name=atc/properties/postgresql/ca_cert?
   type: replace
   value: |
     ((control-plane-ca.certificate))
-    ((rds-ca-cert))
 
 - path: /instance_groups/name=web/jobs/name=atc/properties/postgresql/host?
   type: replace
