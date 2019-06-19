@@ -1,0 +1,51 @@
+---
+- path: /instance_groups/name=db
+  type: remove
+
+- path: /variables/name=credhub_db_password
+  type: remove
+
+- path: /variables/name=uaa_db_password
+  type: remove
+
+- path: /variables/name=postgres_password
+  type: remove
+
+- path: /instance_groups/name=uaa/jobs/name=uaa/properties/uaadb/address?
+  type: replace
+  value: ((rds-hostname))
+
+- path: /instance_groups/name=uaa/jobs/name=uaa/properties/uaadb/roles/tag=admin
+  type: replace
+  value: 
+    name: ((rds-username))
+    password: ((rds-password))
+    tag: admin
+
+- path: /instance_groups/name=credhub/jobs/name=credhub/properties/credhub/data_storage/username
+  type: replace
+  value: ((rds-username))
+
+- path: /instance_groups/name=credhub/jobs/name=credhub/properties/credhub/data_storage/password
+  type: replace
+  value: ((rds-password))
+
+- path: /instance_groups/name=credhub/jobs/name=credhub/properties/credhub/data_storage/host?
+  type: replace
+  value: ((rds-hostname))
+
+- path: /instance_groups/name=web/jobs/name=atc/properties/postgresql/ca_cert?
+  type: replace
+  value: |
+    ((control-plane-ca.certificate))
+    ((rds-ca-cert))
+
+- path: /instance_groups/name=web/jobs/name=atc/properties/postgresql/host?
+  type: replace
+  value: ((rds-hostname))
+
+- path: /instance_groups/name=web/jobs/name=atc/properties/postgresql/role?
+  type: replace
+  value: 
+    name: ((rds-username))
+    password: ((rds-password))
