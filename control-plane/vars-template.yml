@@ -31,4 +31,4 @@ uaa-tls:
   ca: *ca
 uaa_ca_cert: *ca
 uaa_url: https://uaa.((domain))
-vm_type: r4.large
+vm_type: r5.large
